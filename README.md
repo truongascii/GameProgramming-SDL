@@ -12,6 +12,6 @@ GamePrograming
 * Experience in OO and C++
 * I will be doing most of my work on MS Visual Studio 2013 PRO
 
-Credits:
-Lazy Foo
-Ivan Safrin *professor for CS3113 NYU-Poly
+* Credits:
+* Lazy Foo
+* Ivan Safrin *professor for CS3113 NYU-Poly

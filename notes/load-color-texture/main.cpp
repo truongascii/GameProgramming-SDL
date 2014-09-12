@@ -30,8 +30,6 @@ GLuint LoadTexture(const char *image_path) {
 	//loads the image using given path
 	SDL_Surface *surface = IMG_Load(image_path);
 
-
-
 	if (surface == NULL)
 	{
 		//finds the current working directory
@@ -144,6 +142,8 @@ void loadGame(const char* title, int width, int height){
 
 		//void glClear (GLbitfield mask);  Clears the screen to the set clear color.
 		glClear(GL_COLOR_BUFFER_BIT);
+
+		glTranslatef(0.65, 0.65, 0.0); //move right 0.5(x) up 0.5(y)
 
 		//Drawining a triangle
 		/*GLfloat triangle[] = { 0.0f, 0.5f, -0.5f, -0.5f, 0.5f, -0.5f };

@@ -7,7 +7,7 @@ GamePrograming
 
 * Requirements:
 
-*Suggested Guide: http://lazyfoo.net/tutorials/SDL/index.php
+* Suggested Guide: http://lazyfoo.net/tutorials/SDL/index.php
 * SDL 2.0
 * Experience in OO and C++
 * I will be doing most of my work on MS Visual Studio 2013 PRO

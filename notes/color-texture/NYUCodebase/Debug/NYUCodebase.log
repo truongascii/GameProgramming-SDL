@@ -1,0 +1,14 @@
+﻿Build started 9/12/2014 3:54:45 AM.
+     1>Project "C:\Users\Rakin\Desktop\GamePrograming\notes\color-texture\NYUCodebase\NYUCodebase.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         W:\VisualStudio\VC\bin\CL.exe /c /IC:\SDL2\include /IC:\SDL2_image\include /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
+         main.cpp
+     1>c:\users\rakin\desktop\gameprograming\notes\color-texture\nyucodebase\main.cpp(146): warning C4305: 'argument' : truncation from 'double' to 'GLfloat'
+       Link:
+         W:\VisualStudio\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Rakin\Desktop\GamePrograming\notes\color-texture\Debug\NYUCodebase.exe" /INCREMENTAL /NOLOGO /LIBPATH:C:\SDL2\lib\x86 /LIBPATH:C:\SDL2_image\lib\x86 SDL2.lib SDL2main.lib SDL2_image.lib OpenGL32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Rakin\Desktop\GamePrograming\notes\color-texture\Debug\NYUCodebase.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Rakin\Desktop\GamePrograming\notes\color-texture\Debug\NYUCodebase.lib" /MACHINE:X86 Debug\main.obj
+         NYUCodebase.vcxproj -> C:\Users\Rakin\Desktop\GamePrograming\notes\color-texture\Debug\NYUCodebase.exe
+     1>Done Building Project "C:\Users\Rakin\Desktop\GamePrograming\notes\color-texture\NYUCodebase\NYUCodebase.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:00.54

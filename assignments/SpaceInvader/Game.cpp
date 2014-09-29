@@ -25,11 +25,11 @@ void Game::shootBullet() {
 	SpriteSheet bulletSprite = SpriteSheet(spriteSheetTexture, 856.0f / 1024.0f, 812.0f / 1024.0f, 9.0f / 1024.0f, 57.0f / 1024.0f);
 	bullets[bulletIndex].sprite = bulletSprite;
 	bullets[bulletIndex].visible = true;
-	bullets[bulletIndex].x = gameObjs[0]->getX();
-	bullets[bulletIndex].y = -0.8f;
+	bullets[bulletIndex].x = gameObjs[0]->getX(); //players x pos
+	bullets[bulletIndex].y = gameObjs[0]->getY(); //players y pos
 	bullets[bulletIndex].scale = 0.8f;
 	bullets[bulletIndex].rotation = 0.0f;
-	bullets[bulletIndex].speed = 2.0f;
+	bullets[bulletIndex].speed = 2.5f;
 	bulletIndex++;
 	if (bulletIndex > MAX_BULLETS - 1) {
 		bulletIndex = 0;

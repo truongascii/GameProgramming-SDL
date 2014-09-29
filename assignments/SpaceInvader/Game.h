@@ -19,6 +19,7 @@ public:
 	Game();
 	~Game();
 	GLuint LoadTexture(const char *image_path);
+	void DrawText(GLuint fontTexture, string text, float size, float spacing, float r, float g, float b, float a);
 
 	void shootBullet();
 	void Init();
@@ -35,8 +36,6 @@ public:
 	void RenderEndScene();
 
 	bool UpdateAndRender();
-	void DrawText(GLuint fontTexture, string text, float size, float spacing, float r, float g, float b, float a);
-	
 
 private:
 	bool done;

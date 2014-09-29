@@ -3,7 +3,7 @@
 //DEFAULT CONSTRUCTOR
 Game::Game() {
 	SDL_Init(SDL_INIT_VIDEO);
-	displayWindow = SDL_CreateWindow("My Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, SDL_WINDOW_OPENGL);
+	displayWindow = SDL_CreateWindow("Space Invaders", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, SDL_WINDOW_OPENGL);
 	SDL_GLContext context = SDL_GL_CreateContext(displayWindow);
 	SDL_GL_MakeCurrent(displayWindow, context);
 
@@ -263,6 +263,10 @@ void Game::RenderMenuScene() {
 }
 //Renders game scene
 void Game::RenderGameScene() {
+	glLoadIdentity();
+	glTranslatef(-0.3f, 0.9f, 0.0f);
+	DrawText(fontSheetTexture, "Score: " + to_string(score), 0.08, 0.0, 1.0, 0.5, 1.0, 1.0);
+
 	for (size_t i = 0; i < enemies.size(); i++) {
 		enemies[i]->Render();
 	}
@@ -270,9 +274,6 @@ void Game::RenderGameScene() {
 	for (size_t i = 0; i < MAX_BULLETS; i++) {
 		bullets[i].Render();
 	}
-	glLoadIdentity();
-	glTranslatef(-0.3f, 0.9f, 0.0f);
-	DrawText(fontSheetTexture, "Score: " + to_string(score), 0.08, 0.0, 1.0, 0.5, 1.0, 1.0);
 }
 //Renders gameover scene
 void Game::RenderEndScene() {

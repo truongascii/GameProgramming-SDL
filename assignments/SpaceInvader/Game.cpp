@@ -10,7 +10,7 @@ Game::Game() {
 	glViewport(0, 0, 800, 600);
 	glMatrixMode(GL_PROJECTION);
 	glOrtho(-1.33, 1.33, -1.0, 1.0, -1.0, 1.0);
-	
+
 	done = false;
 	lastFrameTicks = 0.0f;
 	state = STATE_MAIN_MENU;
@@ -25,7 +25,7 @@ void Game::shootBullet() {
 	SpriteSheet bulletSprite = SpriteSheet(spriteSheetTexture, 856.0f / 1024.0f, 812.0f / 1024.0f, 9.0f / 1024.0f, 57.0f / 1024.0f);
 	bullets[bulletIndex].sprite = bulletSprite;
 	bullets[bulletIndex].visible = true;
-	bullets[bulletIndex].x = enemies[0]->getX();
+	bullets[bulletIndex].x = gameObjs[0]->getX();
 	bullets[bulletIndex].y = -0.8f;
 	bullets[bulletIndex].scale = 0.8f;
 	bullets[bulletIndex].rotation = 0.0f;
@@ -44,7 +44,7 @@ GLuint Game::LoadTexture(const char *image_path) {
 	{
 		char directory[1024];
 		GetCurrentDirectory(1024, directory);
-		OutputDebugString(directory); 
+		OutputDebugString(directory);
 		OutputDebugString(IMG_GetError());
 		OutputDebugString("error loading the image!\n");
 		exit(2);
@@ -74,25 +74,26 @@ void Game::Init() {
 	for (size_t i = 0; i < MAX_BULLETS; i++) {
 		bullets[i].visible = FALSE;
 	}
-	for (size_t i = 0; i < enemies.size(); i++) {
-		delete enemies[i];
+	//empty out before inserting
+	for (size_t i = 0; i < gameObjs.size(); i++) {
+		delete gameObjs[i];
 	}
-	enemies.clear();
-	
+	gameObjs.clear();
+
 	spriteSheetTexture = LoadTexture("sheet.png");
 	fontSheetTexture = LoadTexture("font2.png");
 	//<SubTexture name = "playerShip3_red.png" x = "325" y = "0" width = "98" height = "75" / >
 	SpriteSheet playerSprite = SpriteSheet(spriteSheetTexture, 325.0f / 1024.0f, 0.0f / 1024.0f, 98.0f / 1024.0f, 75.0f / 1024.0f);
 	Player* player = new Player(playerSprite, 0.9f, 0.0f, -0.85f, 0.0f, 1.0f);
-	enemies.push_back(player);
+	gameObjs.push_back(player);
 
 	//<SubTexture name="enemyBlue5.png" x="421" y="814" width="97" height="84"/>
 	SpriteSheet enemySprite = SpriteSheet(spriteSheetTexture, 421.0f / 1024.0f, 814.0f / 1024.0f, 97.0f / 1024.0f, 84.0f / 1024.0f);
-	
+
 	for (float i = -1.0f; i < 1.0f; i = i + 0.2f) {
 		for (float j = 0.5f; j > 0.0f; j = j - 0.2f) {
 			GameObject* enemy = new GameObject(enemySprite, 0.7f, i, j, 0.0f, 1.0f, 0.2f, -0.03f);
-			enemies.push_back(enemy);
+			gameObjs.push_back(enemy);
 		}
 	}
 
@@ -101,10 +102,10 @@ void Game::Init() {
 //Destructor
 Game::~Game() {
 	//clear out pointers
-	for (size_t i = 0; i < enemies.size(); i++) {
-		delete enemies[i];
+	for (size_t i = 0; i < gameObjs.size(); i++) {
+		delete gameObjs[i];
 	}
-	enemies.clear();
+	gameObjs.clear();
 
 	SDL_Quit();
 }
@@ -190,45 +191,45 @@ void Game::UpdateGameScene(float elapsed) {
 		}
 		else if (event.type == SDL_KEYDOWN) {
 			if (event.key.keysym.scancode == SDL_SCANCODE_SPACE) {
-					shootBullet();
+				shootBullet();
 			}
 		}
 	}
-	
-	for (size_t i = 1; i < enemies.size(); i++) {
+
+	for (size_t i = 1; i < gameObjs.size(); i++) {
 		//enemy reached the bottom
-		if (enemies[i]->getY() < -0.75) {
+		if (gameObjs[i]->getY() < -0.75) {
 			state = STATE_GAME_OVER;
 			Init();
 		}
-		
-		if (enemies[i]->getX() > 1.2 || enemies[i]->getX() < -1.2) {
-			for (size_t j = 1; j < enemies.size(); j++) {
-				enemies[j]->directionX = -enemies[j]->directionX;
+
+		if (gameObjs[i]->getX() > 1.2 || gameObjs[i]->getX() < -1.2) {
+			for (size_t j = 1; j < gameObjs.size(); j++) {
+				gameObjs[j]->directionX = -gameObjs[j]->directionX;
 			}
 			break;
 		}
-		
+
 		for (size_t j = 0; j < MAX_BULLETS; j++) {
-			if (bullets[j].visible && CollisionDetect(*enemies[i], bullets[j])) {
+			if (bullets[j].visible && CollisionDetect(*gameObjs[i], bullets[j])) {
 				bullets[j].visible = false;
-				delete enemies[i];
-				enemies.erase(enemies.begin() + i);
+				delete gameObjs[i];
+				gameObjs.erase(gameObjs.begin() + i);
 				score++;
 				break;
 			}
 		}
 	}
 
-	for (size_t i = 0; i < enemies.size(); i++) {
-		enemies[i]->Update(elapsed);
+	for (size_t i = 0; i < gameObjs.size(); i++) {
+		gameObjs[i]->Update(elapsed);
 	}
 
 	for (size_t i = 0; i < MAX_BULLETS; i++) {
 		bullets[i].Update(elapsed);
 	}
 	//all enemy dead
-	if (enemies.size() <= 1){
+	if (gameObjs.size() <= 1){
 		state = STATE_GAME_OVER;
 		Init();
 	}
@@ -267,8 +268,8 @@ void Game::RenderGameScene() {
 	glTranslatef(-0.3f, 0.9f, 0.0f);
 	DrawText(fontSheetTexture, "Score: " + to_string(score), 0.08, 0.0, 1.0, 0.5, 1.0, 1.0);
 
-	for (size_t i = 0; i < enemies.size(); i++) {
-		enemies[i]->Render();
+	for (size_t i = 0; i < gameObjs.size(); i++) {
+		gameObjs[i]->Render();
 	}
 
 	for (size_t i = 0; i < MAX_BULLETS; i++) {
@@ -278,9 +279,16 @@ void Game::RenderGameScene() {
 //Renders gameover scene
 void Game::RenderEndScene() {
 	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	glTranslatef(-0.4f, 0.2f, 0.0f);
-	DrawText(fontSheetTexture, "GAME OVER", 0.1, 0.0, 0.0, 0.0, 1.0, 1.0);
+	if (score == 33){
+		glLoadIdentity();
+		glTranslatef(-0.3f, 0.2f, 0.0f);
+		DrawText(fontSheetTexture, "YOU WIN", 0.1, 0.0, 0.0, 0.0, 1.0, 1.0);
+	}
+	else{
+		glLoadIdentity();
+		glTranslatef(-0.35f, 0.2f, 0.0f);
+		DrawText(fontSheetTexture, "YOU LOSE", 0.1, 0.0, 0.0, 0.0, 1.0, 1.0);
+	}
 	glLoadIdentity();
 	glTranslatef(-0.3f, 0.0f, 0.0f);
 	DrawText(fontSheetTexture, "Your SCORE: ", 0.05, 0.0, 1.0, 1.0, 1.0, 1.0);
@@ -323,7 +331,7 @@ void Game::DrawText(GLuint fontTexture, string text, float size, float spacing, 
 		vertexData.insert(vertexData.end(), { ((size + spacing) * i) + (-0.5f* size), 0.5f* size, ((size + spacing) * i) + (-0.5f* size), -0.5f* size, ((size + spacing) * i) + (0.5f* size), -0.5f* size, ((size + spacing) * i) + (0.5f* size), 0.5f * size });
 		texCoordData.insert(texCoordData.end(), { texture_x, texture_y, texture_x, texture_y + texture_size, texture_x + texture_size, texture_y + texture_size, texture_x + texture_size, texture_y });
 	}
-	
+
 	glColorPointer(4, GL_FLOAT, 0, colorData.data());
 	glEnableClientState(GL_COLOR_ARRAY);
 	glVertexPointer(2, GL_FLOAT, 0, vertexData.data());

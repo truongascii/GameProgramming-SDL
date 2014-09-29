@@ -43,7 +43,7 @@ private:
 	float lastFrameTicks;
 	SDL_Window* displayWindow;
 
-	vector<GameObject*> enemies;
+	vector<GameObject*> gameObjs;
 
 	int bulletIndex;
 	Bullet bullets[MAX_BULLETS];

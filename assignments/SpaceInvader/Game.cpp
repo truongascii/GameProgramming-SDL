@@ -203,7 +203,7 @@ void Game::UpdateGameScene(float elapsed) {
 			Init();
 		}
 
-		if (gameObjs[i]->getX() > 1.2 || gameObjs[i]->getX() < -1.2) {
+		if (gameObjs[i]->getX() > 1.21 || gameObjs[i]->getX() < -1.21) {
 			for (size_t j = 1; j < gameObjs.size(); j++) {
 				gameObjs[j]->directionX = -gameObjs[j]->directionX;
 			}

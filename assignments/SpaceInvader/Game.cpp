@@ -20,16 +20,16 @@ Game::Game() {
 }
 
 //SHOOT BULLETS
-void Game::shootBullet() {
+void Game::shootBullet(int direction, int player) {
 	//<SubTexture name="laserRed13.png" x="856" y="812" width="9" height="57"/>
 	SpriteSheet bulletSprite = SpriteSheet(spriteSheetTexture, 856.0f / 1024.0f, 812.0f / 1024.0f, 9.0f / 1024.0f, 57.0f / 1024.0f);
 	bullets[bulletIndex].sprite = bulletSprite;
 	bullets[bulletIndex].visible = true;
-	bullets[bulletIndex].x = gameObjs[0]->getX(); //players x pos
-	bullets[bulletIndex].y = gameObjs[0]->getY(); //players y pos
+	bullets[bulletIndex].x = gameObjs[player]->getX(); //players x pos
+	bullets[bulletIndex].y = gameObjs[player]->getY(); //players y pos
 	bullets[bulletIndex].scale = 0.8f;
 	bullets[bulletIndex].rotation = 0.0f;
-	bullets[bulletIndex].speed = 2.5f;
+	bullets[bulletIndex].speed = 2.5f * direction;
 	bulletIndex++;
 	if (bulletIndex > MAX_BULLETS - 1) {
 		bulletIndex = 0;
@@ -225,7 +225,7 @@ void Game::UpdateGameScene(float elapsed) {
 		}
 		else if (event.type == SDL_KEYDOWN) {
 			if (event.key.keysym.scancode == SDL_SCANCODE_SPACE) {
-				shootBullet();
+				shootBullet(1, 0);
 			}
 		}
 	}

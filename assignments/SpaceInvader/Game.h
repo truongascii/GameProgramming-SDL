@@ -21,7 +21,7 @@ public:
 	GLuint LoadTexture(const char *image_path);
 	void DrawText(GLuint fontTexture, string text, float size, float spacing, float r, float g, float b, float a);
 
-	void shootBullet();
+	void shootBullet(int direction, int player);
 	void Init();
 	bool CollisionDetect(const GameObject& enemy, const Bullet& bullet);
 

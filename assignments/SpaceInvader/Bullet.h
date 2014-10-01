@@ -4,8 +4,6 @@
 #define BULLET_h_
 
 #include "SpriteSheet.h"
-#include <string>
-using namespace std;
 
 class Bullet {
 public:

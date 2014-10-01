@@ -4,6 +4,9 @@
 #define BULLET_h_
 
 #include "SpriteSheet.h"
+#include <string>
+using namespace std;
+
 class Bullet {
 public:
 	Bullet();
@@ -16,6 +19,7 @@ public:
 	float scale;
 	float x;
 	float y;
+	int direction;
 	float rotation;
 	float speed;
 	float visible;

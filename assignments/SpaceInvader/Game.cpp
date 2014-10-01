@@ -21,6 +21,8 @@ Game::Game() {
 
 //SHOOT BULLETS
 void Game::shootBullet(int direction, int player) {
+
+	bullets[bulletIndex].direction = direction;
 	//<SubTexture name="laserRed13.png" x="856" y="812" width="9" height="57"/>
 	SpriteSheet bulletSprite = SpriteSheet(spriteSheetTexture, 856.0f / 1024.0f, 812.0f / 1024.0f, 9.0f / 1024.0f, 57.0f / 1024.0f);
 	bullets[bulletIndex].sprite = bulletSprite;
@@ -228,6 +230,8 @@ void Game::UpdateGameScene(float elapsed) {
 				shootBullet(1, 0);
 			}
 		}
+		int enemyFire = rand() % (gameObjs.size() - 1) + 1;
+		shootBullet(-1, enemyFire);
 	}
 
 	for (size_t i = 1; i < gameObjs.size(); i++) {
@@ -243,14 +247,17 @@ void Game::UpdateGameScene(float elapsed) {
 			}
 			break;
 		}
-
 		for (size_t j = 0; j < MAX_BULLETS; j++) {
-			if (bullets[j].visible && CollisionDetect(*gameObjs[i], bullets[j])) {
+			if (bullets[j].direction > 0 && bullets[j].visible && CollisionDetect(*gameObjs[i], bullets[j])) {
 				bullets[j].visible = false;
 				delete gameObjs[i];
 				gameObjs.erase(gameObjs.begin() + i);
 				score++;
 				break;
+			}
+			if (bullets[j].direction < 0 && bullets[j].visible && CollisionDetect(*gameObjs[0], bullets[j])) {
+				state = STATE_GAME_OVER;
+				Init();
 			}
 		}
 	}

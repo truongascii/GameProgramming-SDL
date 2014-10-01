@@ -230,6 +230,7 @@ void Game::UpdateGameScene(float elapsed) {
 				shootBullet(1, 0);
 			}
 		}
+		//selects random enemy to shoot from
 		int enemyFire = rand() % (gameObjs.size() - 1) + 1;
 		shootBullet(-1, enemyFire);
 	}

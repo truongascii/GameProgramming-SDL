@@ -16,8 +16,8 @@ float GameObject::getY() {
 void GameObject::Update(float elapsed) {
 	//boundary check
 	if ((!(xPos > 1.2) || directionX < 0) && (!(xPos < -1.2) || directionX > 0)) {
-		xPos += directionX * speed * elapsed * 5;
-		yPos += directionY * speed * elapsed * 3;
+		xPos += directionX * speed * elapsed * 2;
+		yPos += directionY * speed * elapsed * 1.5;
 	}	
 }
 
